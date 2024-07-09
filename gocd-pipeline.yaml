@@ -1,0 +1,36 @@
+group: defaultGroup
+name: hello-world-pipeline
+label_template: "${COUNT}"
+materials:
+  - type: git
+    attributes:
+      url: https://github.com/htetgit/Autobuild-repo.git
+      destination: "repo"
+      branch: "main"
+stages:
+  - name: Build
+    jobs:
+      - name: build-job
+        tasks:
+          - type: exec
+            attributes:
+              command: "cmd"
+              arguments:
+                - "/c"
+                - "go mod tidy && go build -o hello-world-app.exe"
+              working_directory: "repo"
+  - name: Run
+    jobs:
+      - name: run-job
+        tasks:
+          - type: exec
+            attributes:
+              command: "cmd"
+              arguments:
+                - "/c"
+                - "hello-world-app.exe"
+              working_directory: "repo"
+environments:
+  Test-env:
+    pipelines:
+      - hello-world-pipeline
