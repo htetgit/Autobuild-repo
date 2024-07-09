@@ -4,9 +4,9 @@ label_template: "${COUNT}"
 materials:
   - type: git
     attributes:
-      url: https://github.com/htetgit/Autobuild-repo.git
-      destination: "repo"
-      branch: "main"
+      url: "https://github.com/your-username/hello-world-app.git"
+      destination: "repo"  # The Git repository will be cloned into the 'repo' directory.
+      branch: "main"       # The branch to be checked out from the Git repository.
 stages:
   - name: Build
     jobs:
@@ -17,8 +17,8 @@ stages:
               command: "cmd"
               arguments:
                 - "/c"
-                - "go mod tidy && go build -o hello-world-app.exe"
-              working_directory: "repo"
+                - "go mod tidy && go build -o ..\\hello-world-app.exe"  # Build the Go application and output it as an executable.
+              working_directory: "C:\\Program Files (x86)\\Go Agent\\pipelines\\Autobuild-HelloWorld\\repo\\src"  # Directory where Go code is located for building.
   - name: Run
     jobs:
       - name: run-job
@@ -28,8 +28,8 @@ stages:
               command: "cmd"
               arguments:
                 - "/c"
-                - "hello-world-app.exe"
-              working_directory: "repo"
+                - "..\\hello-world-app.exe"  # Run the Go application.
+              working_directory: "C:\\Program Files (x86)\\Go Agent\\pipelines\\Autobuild-HelloWorld\\repo\\src"  # Directory where the executable is located.
 environments:
   Test-env:
     pipelines:
